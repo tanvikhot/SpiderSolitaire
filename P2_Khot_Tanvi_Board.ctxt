@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=P2_Khot_Tanvi_Board
+comment1.params=numStacks\ numDecks
+comment1.target=P2_Khot_Tanvi_Board(int,\ int)
+comment1.text=\n\ \ Sets\ up\ the\ Board\ and\ fills\ the\ stacks\ and\ draw\ pile\ from\ a\ Deck\n\ \ consisting\ of\ numDecks\ Decks.\ \ The\ number\ of\ Cards\ in\ a\ Deck\n\ \ depends\ on\ the\ number\ of\ suits.\ Here\ are\ examples\:\n\ \ \n\ \ \#\ suits\ \ \ \ \ \#\ numDecks\ \ \ \ \ \ \#cards\ in\ overall\ Deck\n\ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ 13\ (all\ same\ suit)\n\ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ 26\ (all\ same\ suit)\n\ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ 26\ (one\ of\ each\ suit)\n\ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ 52\ (two\ of\ each\ suit)\n\ \ \ \ \ \ 4\ \ \ \ \ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ 104\ (two\ of\ each\ suit)\n\ \ \ \ \ \ \n\ \ Once\ the\ overall\ Deck\ is\ built,\ it\ is\ shuffled\ and\ half\ the\ cards\n\ \ are\ placed\ as\ evenly\ as\ possible\ into\ the\ stacks.\ \ The\ other\ half\n\ \ of\ the\ cards\ remain\ in\ the\ draw\ pile.\ \ If\ you'd\ like\ to\ specify\n\ \ more\ than\ one\ suit,\ feel\ free\ to\ add\ to\ the\ parameter\ list.\n
+comment2.params=symbol\ src\ dest
+comment2.target=void\ makeMove(java.lang.String,\ int,\ int)
+comment2.text=\n\ \ Moves\ a\ run\ of\ cards\ from\ src\ to\ dest\ (if\ possible)\ and\ flips\ the\n\ \ next\ card\ if\ one\ is\ available.\ \ Change\ the\ parameter\ list\ to\ match\n\ \ your\ implementation\ of\ Card\ if\ you\ need\ to.\n
+comment3.params=
+comment3.target=void\ drawCards()
+comment3.text=\ \n\ \ Moves\ one\ card\ onto\ each\ stack,\ or\ as\ many\ as\ are\ available\n
+comment4.params=
+comment4.target=boolean\ isEmpty()
+comment4.text=\n\ \ Returns\ true\ if\ all\ stacks\ and\ the\ draw\ pile\ are\ all\ empty\n
+comment5.params=sourceStack
+comment5.target=void\ clear(int)
+comment5.text=\n\ \ If\ there\ is\ a\ run\ of\ A\ through\ K\ starting\ at\ the\ end\ of\ sourceStack\n\ \ then\ the\ run\ is\ removed\ from\ the\ game\ or\ placed\ into\ a\ completed\n\ \ stacks\ area.\n\ \ \n\ \ If\ there\ is\ not\ a\ run\ of\ A\ through\ K\ starting\ at\ the\ end\ of\ sourceStack\n\ \ then\ an\ invalid\ move\ message\ is\ displayed\ and\ the\ Board\ is\ not\ changed.\n
+comment6.params=
+comment6.target=void\ printBoard()
+comment6.text=\n\ Prints\ the\ board\ to\ the\ terminal\ window\ by\ displaying\ the\ stacks,\ draw\n\ pile,\ and\ done\ stacks\ (if\ you\ chose\ to\ have\ them)\n
+numComments=7
