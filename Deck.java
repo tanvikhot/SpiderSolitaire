@@ -79,7 +79,7 @@ public class P2_Khot_Tanvi_Deck
             while(cards.get(a).getValue() != 13){
                 a++;
             }
-            if(cards.size()-a-1  >= 13){
+            if(cards.size()-a  >= 13){
                 if(cards.get(a + 12).getValue() == 1){
                     for(int i = a; i < cards.size()-1; i++){
                         if(cards.get(i+1).getValue() + 1 == cards.get(i).getValue()){
