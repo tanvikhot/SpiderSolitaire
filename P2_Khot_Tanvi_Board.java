@@ -1,7 +1,13 @@
+import java.util.*;
+
+
 public class P2_Khot_Tanvi_Board
 {   
     /* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
     // Attributes
+    ArrayList<P2_Khot_Tanvi_Deck> stacks;
+    P2_Khot_Tanvi_Deck drawPile;
+    ArrayList<P2_Khot_Tanvi_Deck> completedStacks;
 
     /**
      *  Sets up the Board and fills the stacks and draw pile from a Deck
@@ -22,8 +28,35 @@ public class P2_Khot_Tanvi_Board
      */    
     public P2_Khot_Tanvi_Board(int numStacks, int numDecks) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
-    }
+        // Build the deck
+        P2_Khot_Tanvi_Deck deck = new P2_Khot_Tanvi_Deck();
+        for (int i = 0; i < numDecks; i++) {
+            deck.fillDeck();
+        }
+        deck.shuffle();
 
+        // Draw cards from deck and move to stacks
+        stacks = new ArrayList<>(numStacks);
+        for (int i=0; i < numStacks; i++) {
+            stacks.add(new P2_Khot_Tanvi_Deck());
+        }
+        
+        int cardsForStacks = deck.size()/2 + deck.size()%numStacks;
+        for (int i = 0; i < cardsForStacks; i++) {
+            int currentStack = i % numStacks;
+            P2_Khot_Tanvi_Card card = deck.draw();
+            if (card != null) {
+                stacks.get(currentStack).add(card);
+            }
+        }
+        for (P2_Khot_Tanvi_Deck stack : stacks) {
+            stack.getTopCard().setFaceUp(true);
+        }
+        
+        // remaining cards go to the drawPile
+        drawPile = deck;
+    }
+    
     /**
      *  Moves a run of cards from src to dest (if possible) and flips the
      *  next card if one is available.  Change the parameter list to match
@@ -31,6 +64,8 @@ public class P2_Khot_Tanvi_Board
      */
     public void makeMove(String symbol, int src, int dest) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 5 *** */
+        
+        
     }
 
     /** 
@@ -38,6 +73,13 @@ public class P2_Khot_Tanvi_Board
      */
     public void drawCards() {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 5 *** */
+        for (int i = 0; i < stacks.size(); i++) {
+            P2_Khot_Tanvi_Card card = drawPile.draw();
+            if (card != null) {
+                card.setFaceUp(true);
+                stacks.get(i).add(card); 
+            }
+        }
     }
 
     /**
@@ -45,7 +87,16 @@ public class P2_Khot_Tanvi_Board
      */ 
     public boolean isEmpty() {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 5 *** */
-        return false;
+        for (P2_Khot_Tanvi_Deck stack : stacks) {
+            if (stack.size() > 0) {
+                return false;
+            }
+        }
+
+        if (drawPile.size() > 0) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -58,6 +109,15 @@ public class P2_Khot_Tanvi_Board
      */
     public void clear(int sourceStack) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 5 *** */
+        if (sourceStack >= stacks.size()) {
+            System.out.println("Invalid move");
+            return;
+        }
+        if (stacks.get(sourceStack).hasRun()) {
+            stacks.get(sourceStack).removeRun();
+        } else {
+            System.out.println("Invalid move");
+        }
     }
 
     /**
@@ -66,5 +126,13 @@ public class P2_Khot_Tanvi_Board
      */
     public void printBoard() {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
+                int i=1;
+        for (P2_Khot_Tanvi_Deck stack : stacks) {
+            System.out.println(i + ": " + stack.toString());
+            i++;
+        }
+        System.out.println();
+        System.out.println("Draw Pile:");
+        System.out.println(drawPile);
     }
 }

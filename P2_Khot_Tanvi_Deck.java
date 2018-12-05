@@ -8,7 +8,8 @@ import java.util.*;
  */
 public class P2_Khot_Tanvi_Deck
 {
-
+    String[] symbols = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"};
+        int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
     public ArrayList<P2_Khot_Tanvi_Card> cards;
 
     public P2_Khot_Tanvi_Deck() {
@@ -56,5 +57,109 @@ public class P2_Khot_Tanvi_Deck
     @Override
     public String toString() {
         return cards.toString();
+    }
+
+    public P2_Khot_Tanvi_Card draw(){
+        if(cards.size() > 0){
+            P2_Khot_Tanvi_Card card = cards.remove(0);
+            return card;
+        }
+        return null;
+    }
+
+    public P2_Khot_Tanvi_Card getTopCard(){
+        if(cards.size() > 0){
+            P2_Khot_Tanvi_Card card = cards.get(cards.size()-1);
+            return card;
+        }
+        return null;
+    }
+    
+    public int size(){
+        return cards.size();
+    }
+
+    public void clear(){
+        this.cards.clear();
+    }
+
+    public boolean run(){
+        int a = 0;
+        if(cards.size() >= 13){
+            while(cards.get(a).getValue() != 13){
+                a++;
+            }
+            if(cards.size()-a  >= 13){
+                if(cards.get(a + 12).getValue() == 1){
+                    for(int i = a; i < cards.size()-1; i++){
+                        if(cards.get(i+1).getValue() + 1 == cards.get(i).getValue()){
+                            continue;
+                        }else{
+                            return false;
+                        }
+                    }
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+            
+        }else{
+            return false;
+        }
+    }
+    
+    public boolean hasRun() {
+        boolean hasRun = false;
+        if (cards.size() < 13) {
+            return false;
+        }
+        
+        int lastCardValue = -1;
+        int countCards = 0;
+        for (int i = cards.size() - 1; i >= 0; i--) {
+            P2_Khot_Tanvi_Card card = cards.get(i);
+            if (i == cards.size() - 1 && card.isFaceUp() && card.getValue() == 1) {
+                countCards++;
+                lastCardValue = 1;
+            } else if (card.isFaceUp() && lastCardValue == card.getValue() - 1) {
+                countCards++;
+                lastCardValue = card.getValue();
+            } else {
+                hasRun = false;
+            }
+        }
+        if (countCards == 13) {
+            return true;
+        }
+        return hasRun;
+    }
+    
+    public ArrayList<P2_Khot_Tanvi_Card> removeRun() {
+        ArrayList<P2_Khot_Tanvi_Card> run = new ArrayList<>();
+        if (cards.size() < 13) {
+            return null;
+        }
+        
+        for (int i = cards.size() - 1; i >= 0; i--) {
+            if (run.size() == 0 && cards.get(i).getValue() == 1) {
+                run.add(cards.remove(i));
+            } else if (run.get(run.size() - 1).getValue() == cards.get(i).getValue() - 1) {
+                run.add(cards.remove(i));
+            } else {
+                break;
+            }
+        }
+        return run;
+    }
+    
+    public void fillDeck(){
+//        for(int a = 1; a <= 4; a++){
+            for(int i = 0; i < 13; i++){
+                cards.add(new P2_Khot_Tanvi_Card(symbols[i],values[i]));
+            }
+//        }
     }
 }
