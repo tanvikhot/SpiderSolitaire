@@ -64,8 +64,57 @@ public class P2_Khot_Tanvi_Board
      */
     public void makeMove(String symbol, int src, int dest) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 5 *** */
+        if (src >= stacks.size() || dest >= stacks.size()) {
+            System.out.println("Invalid move");
+            return;
+        }
+        P2_Khot_Tanvi_Deck stackSrc = stacks.get(src);
+        P2_Khot_Tanvi_Deck stackDest = stacks.get(dest);
         
+        int lastCardValue = -1;
+        int indexRequestedCard = -1;
+        for (int i = stackSrc.size() - 1; i >= 0; i--) {
+            P2_Khot_Tanvi_Card card = stackSrc.getCard(i);
+            
+            if (!card.isFaceUp()) {
+                break;
+            }
+            if (lastCardValue == -1) {
+                lastCardValue = card.getValue();
+                if (card.getSymbol().equals(symbol)) {
+                    indexRequestedCard = i;
+                    break;
+                }
+            } else if (card.getValue() == (lastCardValue + 1)) {
+                lastCardValue = card.getValue();
+                if (card.getSymbol().equals(symbol)) {
+                    indexRequestedCard = i;
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
         
+        if (indexRequestedCard == -1) {
+            System.out.println("Invalid move");
+            return;
+        }
+        
+        if (stackDest.size() > 0 && stackDest.getTopCard().getValue() != lastCardValue + 1) {
+            System.out.println("Invalid move");
+            return;
+        }
+
+        ArrayList<P2_Khot_Tanvi_Card> run = stackSrc.getRun(indexRequestedCard);
+        stackDest.addAll(run);
+//        for (int i = indexRequestedCard; i < stackSrc.size();) {
+//            P2_Khot_Tanvi_Card card = stackSrc.getCard();
+//            stackDest.add(card);
+//        }
+        if (stackSrc.size() > 0) {
+            stackSrc.getTopCard().setFaceUp(true);
+        }
     }
 
     /** 
@@ -117,6 +166,9 @@ public class P2_Khot_Tanvi_Board
             stacks.get(sourceStack).removeRun();
         } else {
             System.out.println("Invalid move");
+        }
+        if (stacks.get(sourceStack).size() > 0) {
+            stacks.get(sourceStack).getTopCard().setFaceUp(true);
         }
     }
 

@@ -22,6 +22,12 @@ public class P2_Khot_Tanvi_Deck
         this.cards.add(card);
     }
 
+    public void add(int index, P2_Khot_Tanvi_Card card) {
+        this.cards.add(index, card);
+    }
+
+    public void addAll(ArrayList<P2_Khot_Tanvi_Card> cards) { this.cards.addAll(cards); }
+
     public void shuffle() {
         Random rand = new Random();
         int times = rand.nextInt(cards.size() * 20) + 1;
@@ -61,7 +67,7 @@ public class P2_Khot_Tanvi_Deck
 
     public P2_Khot_Tanvi_Card draw(){
         if(cards.size() > 0){
-            P2_Khot_Tanvi_Card card = cards.remove(0);
+            P2_Khot_Tanvi_Card card = cards.remove(cards.size() - 1);
             return card;
         }
         return null;
@@ -70,6 +76,14 @@ public class P2_Khot_Tanvi_Deck
     public P2_Khot_Tanvi_Card getTopCard(){
         if(cards.size() > 0){
             P2_Khot_Tanvi_Card card = cards.get(cards.size()-1);
+            return card;
+        }
+        return null;
+    }
+    
+    public P2_Khot_Tanvi_Card getCard(int index) {
+        if (cards.size() > index) {
+            P2_Khot_Tanvi_Card card = cards.get(index);
             return card;
         }
         return null;
@@ -154,7 +168,16 @@ public class P2_Khot_Tanvi_Deck
         }
         return run;
     }
-    
+
+    public ArrayList<P2_Khot_Tanvi_Card> getRun(int startingIndex) {
+        ArrayList<P2_Khot_Tanvi_Card> run = new ArrayList<>();
+        int count = cards.size() - startingIndex;
+        for (int i = 0; i < count; i++) {
+            run.add(cards.remove(startingIndex));
+        }
+        return run;
+    }
+
     public void fillDeck(){
 //        for(int a = 1; a <= 4; a++){
             for(int i = 0; i < 13; i++){
