@@ -40,8 +40,9 @@ public class P2_Khot_Tanvi_Board
         for (int i=0; i < numStacks; i++) {
             stacks.add(new P2_Khot_Tanvi_Deck());
         }
-        
-        int cardsForStacks = deck.size()/2 + deck.size()%numStacks;
+
+        int cardsForDrawPile = deck.size()/2/numStacks*numStacks;
+        int cardsForStacks = deck.size() - cardsForDrawPile;
         for (int i = 0; i < cardsForStacks; i++) {
             int currentStack = i % numStacks;
             P2_Khot_Tanvi_Card card = deck.draw();
@@ -65,53 +66,28 @@ public class P2_Khot_Tanvi_Board
     public void makeMove(String symbol, int src, int dest) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 5 *** */
         if (src >= stacks.size() || dest >= stacks.size()) {
-            System.out.println("Invalid move");
+            System.out.println("****Invalid move****\n\n");
             return;
         }
         P2_Khot_Tanvi_Deck stackSrc = stacks.get(src);
         P2_Khot_Tanvi_Deck stackDest = stacks.get(dest);
         
-        int lastCardValue = -1;
-        int indexRequestedCard = -1;
-        for (int i = stackSrc.size() - 1; i >= 0; i--) {
-            P2_Khot_Tanvi_Card card = stackSrc.getCard(i);
-            
-            if (!card.isFaceUp()) {
-                break;
-            }
-            if (lastCardValue == -1) {
-                lastCardValue = card.getValue();
-                if (card.getSymbol().equals(symbol)) {
-                    indexRequestedCard = i;
-                    break;
-                }
-            } else if (card.getValue() == (lastCardValue + 1)) {
-                lastCardValue = card.getValue();
-                if (card.getSymbol().equals(symbol)) {
-                    indexRequestedCard = i;
-                    break;
-                }
-            } else {
-                break;
-            }
-        }
+        int indexRequestedCard = stackSrc.getRunStartForSymbol(symbol);
         
         if (indexRequestedCard == -1) {
-            System.out.println("Invalid move");
+            System.out.println("****Invalid move****\n\n");
             return;
         }
+
+        int lastCardValue = stackSrc.getCard(indexRequestedCard).getValue();
         
         if (stackDest.size() > 0 && stackDest.getTopCard().getValue() != lastCardValue + 1) {
-            System.out.println("Invalid move");
+            System.out.println("****Invalid move****\n\n");
             return;
         }
 
         ArrayList<P2_Khot_Tanvi_Card> run = stackSrc.getRun(indexRequestedCard);
         stackDest.addAll(run);
-//        for (int i = indexRequestedCard; i < stackSrc.size();) {
-//            P2_Khot_Tanvi_Card card = stackSrc.getCard();
-//            stackDest.add(card);
-//        }
         if (stackSrc.size() > 0) {
             stackSrc.getTopCard().setFaceUp(true);
         }
@@ -159,13 +135,13 @@ public class P2_Khot_Tanvi_Board
     public void clear(int sourceStack) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 5 *** */
         if (sourceStack >= stacks.size()) {
-            System.out.println("Invalid move");
+            System.out.println("\n\n****Invalid move****\n\n");
             return;
         }
         if (stacks.get(sourceStack).hasRun()) {
             stacks.get(sourceStack).removeRun();
         } else {
-            System.out.println("Invalid move");
+            System.out.println("****Invalid move****\n\n");
         }
         if (stacks.get(sourceStack).size() > 0) {
             stacks.get(sourceStack).getTopCard().setFaceUp(true);
