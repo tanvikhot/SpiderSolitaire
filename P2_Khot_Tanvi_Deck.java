@@ -48,10 +48,15 @@ public class P2_Khot_Tanvi_Deck {
    * This method returns a list of requested cards from the top deck
    */
   public List<P2_Khot_Tanvi_Card> deal(int numberOfCards) {
+    // returns the cards from the top of the deck. The
+    // returned deck will have the same card on the top as the
+    // original deck
     List<P2_Khot_Tanvi_Card> dealtCards = new ArrayList<P2_Khot_Tanvi_Card>();
     for (int i = 0; i < numberOfCards; i++) {
       if (this.cards.size() > 0) {
         P2_Khot_Tanvi_Card card = this.cards.remove(this.cards.size() - 1);
+        // this is to make sure the order in the returned deck
+        // is the same as this deck.
         dealtCards.add(0, card);
       } else {
         break;
@@ -66,6 +71,8 @@ public class P2_Khot_Tanvi_Deck {
   }
 
   public P2_Khot_Tanvi_Card draw() {
+    // return the top card from the deck (or null if empty)
+    // this method will remove the card
     if (cards.size() > 0) {
       P2_Khot_Tanvi_Card card = cards.remove(cards.size() - 1);
       return card;
@@ -74,6 +81,8 @@ public class P2_Khot_Tanvi_Deck {
   }
 
   public P2_Khot_Tanvi_Card getTopCard() {
+    // this method does not remove the card it just returns the
+    // top card.
     if (cards.size() > 0) {
       P2_Khot_Tanvi_Card card = cards.get(cards.size() - 1);
       return card;
@@ -186,19 +195,23 @@ public class P2_Khot_Tanvi_Deck {
   }
 
   public ArrayList<P2_Khot_Tanvi_Card> getRun(int startingIndex) {
+    // This method is called only after calling getRunStartForSymbol
     ArrayList<P2_Khot_Tanvi_Card> run = new ArrayList<>();
+    // The cards need to be added to the run pile from the startingIndex
+    // to the top of the pile.
     int count = cards.size() - startingIndex;
     for (int i = 0; i < count; i++) {
+      // using cards.remove() so can use startingIndex to remove the cards
+      // in the entire loop
       run.add(cards.remove(startingIndex));
     }
     return run;
   }
 
   public void fillDeck() {
-//        for(int a = 1; a <= 4; a++){
+    // Each deck has 1 suit. No support for suit in this Deck class yet.
     for (int i = 0; i < 13; i++) {
       cards.add(new P2_Khot_Tanvi_Card(symbols[i], values[i]));
     }
-//        }
   }
 }

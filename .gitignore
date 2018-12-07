@@ -17,3 +17,5 @@ ServerConfig.properties
 .DS_Store
 node_modules
 src/main/resources/public/src/
+
+*.class

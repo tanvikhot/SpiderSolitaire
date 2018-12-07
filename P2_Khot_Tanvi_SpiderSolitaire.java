@@ -42,17 +42,17 @@ public class P2_Khot_Tanvi_SpiderSolitaire
             System.out.print(">");
             String command = input.next();
 
-            if (command.equals("move")) {
+            if (command.equals("move") || command.equals("m")) {
                 /* *** TO BE MODIFIED IN ACTIVITY 5 *** */
                 String symbol = input.next();
                 int sourceStack = input.nextInt();
                 int destinationStack = input.nextInt();
                 board.makeMove(symbol, sourceStack - 1, destinationStack - 1);
             }
-            else if (command.equals("draw")) {
+            else if (command.equals("draw") || command.equals("d")) {
                 board.drawCards();
             }
-            else if (command.equals("clear")) {
+            else if (command.equals("clear") || command.equals("c")) {
                 /* *** TO BE MODIFIED IN ACTIVITY 5 *** */
                 int sourceStack = input.nextInt();
                 board.clear(sourceStack - 1);

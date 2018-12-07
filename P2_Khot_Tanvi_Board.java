@@ -2,7 +2,7 @@ import java.util.*;
 
 
 public class P2_Khot_Tanvi_Board
-{   
+{
     /* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
     // Attributes
     ArrayList<P2_Khot_Tanvi_Deck> stacks;
@@ -13,19 +13,19 @@ public class P2_Khot_Tanvi_Board
      *  Sets up the Board and fills the stacks and draw pile from a Deck
      *  consisting of numDecks Decks.  The number of Cards in a Deck
      *  depends on the number of suits. Here are examples:
-     *  
+     *
      *  # suits     # numDecks      #cards in overall Deck
      *      1            1          13 (all same suit)
      *      1            2          26 (all same suit)
      *      2            1          26 (one of each suit)
      *      2            2          52 (two of each suit)
      *      4            2          104 (two of each suit)
-     *      
+     *
      *  Once the overall Deck is built, it is shuffled and half the cards
      *  are placed as evenly as possible into the stacks.  The other half
      *  of the cards remain in the draw pile.  If you'd like to specify
      *  more than one suit, feel free to add to the parameter list.
-     */    
+     */
     public P2_Khot_Tanvi_Board(int numStacks, int numDecks) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
         // Build the deck
@@ -41,7 +41,11 @@ public class P2_Khot_Tanvi_Board
             stacks.add(new P2_Khot_Tanvi_Deck());
         }
 
+        // most online games I saw leave an exact
+        // multiple of numStacks cards in the drawPile
         int cardsForDrawPile = deck.size()/2/numStacks*numStacks;
+
+        // remaining cards go on the stacks
         int cardsForStacks = deck.size() - cardsForDrawPile;
         for (int i = 0; i < cardsForStacks; i++) {
             int currentStack = i % numStacks;
@@ -53,11 +57,11 @@ public class P2_Khot_Tanvi_Board
         for (P2_Khot_Tanvi_Deck stack : stacks) {
             stack.getTopCard().setFaceUp(true);
         }
-        
+
         // remaining cards go to the drawPile
         drawPile = deck;
     }
-    
+
     /**
      *  Moves a run of cards from src to dest (if possible) and flips the
      *  next card if one is available.  Change the parameter list to match
@@ -71,16 +75,16 @@ public class P2_Khot_Tanvi_Board
         }
         P2_Khot_Tanvi_Deck stackSrc = stacks.get(src);
         P2_Khot_Tanvi_Deck stackDest = stacks.get(dest);
-        
+
         int indexRequestedCard = stackSrc.getRunStartForSymbol(symbol);
-        
+
         if (indexRequestedCard == -1) {
             System.out.println("****Invalid move****\n\n");
             return;
         }
 
         int lastCardValue = stackSrc.getCard(indexRequestedCard).getValue();
-        
+
         if (stackDest.size() > 0 && stackDest.getTopCard().getValue() != lastCardValue + 1) {
             System.out.println("****Invalid move****\n\n");
             return;
@@ -93,7 +97,7 @@ public class P2_Khot_Tanvi_Board
         }
     }
 
-    /** 
+    /**
      *  Moves one card onto each stack, or as many as are available
      */
     public void drawCards() {
@@ -102,14 +106,14 @@ public class P2_Khot_Tanvi_Board
             P2_Khot_Tanvi_Card card = drawPile.draw();
             if (card != null) {
                 card.setFaceUp(true);
-                stacks.get(i).add(card); 
+                stacks.get(i).add(card);
             }
         }
     }
 
     /**
      *  Returns true if all stacks and the draw pile are all empty
-     */ 
+     */
     public boolean isEmpty() {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 5 *** */
         for (P2_Khot_Tanvi_Deck stack : stacks) {
@@ -128,7 +132,7 @@ public class P2_Khot_Tanvi_Board
      *  If there is a run of A through K starting at the end of sourceStack
      *  then the run is removed from the game or placed into a completed
      *  stacks area.
-     *  
+     *
      *  If there is not a run of A through K starting at the end of sourceStack
      *  then an invalid move message is displayed and the Board is not changed.
      */
