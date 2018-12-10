@@ -19,3 +19,4 @@ node_modules
 src/main/resources/public/src/
 
 *.class
+.vscode/

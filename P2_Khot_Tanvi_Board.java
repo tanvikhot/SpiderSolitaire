@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class P2_Khot_Tanvi_Board
 {
     /* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
@@ -41,11 +40,7 @@ public class P2_Khot_Tanvi_Board
             stacks.add(new P2_Khot_Tanvi_Deck());
         }
 
-        // most online games I saw leave an exact
-        // multiple of numStacks cards in the drawPile
         int cardsForDrawPile = deck.size()/2/numStacks*numStacks;
-
-        // remaining cards go on the stacks
         int cardsForStacks = deck.size() - cardsForDrawPile;
         for (int i = 0; i < cardsForStacks; i++) {
             int currentStack = i % numStacks;
@@ -158,7 +153,7 @@ public class P2_Khot_Tanvi_Board
      */
     public void printBoard() {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
-                int i=1;
+        int i=1;
         for (P2_Khot_Tanvi_Deck stack : stacks) {
             System.out.println(i + ": " + stack.toString());
             i++;
@@ -166,5 +161,17 @@ public class P2_Khot_Tanvi_Board
         System.out.println();
         System.out.println("Draw Pile:");
         System.out.println(drawPile);
+    }
+    
+    @Override
+    public String toString() {
+        String str = "";
+        for (P2_Khot_Tanvi_Deck stack : stacks) {
+            str += stack.toString();
+            str += "\n";
+        }
+        str += "DrawPile: ";
+        str += drawPile.toString();
+        return str;
     }
 }

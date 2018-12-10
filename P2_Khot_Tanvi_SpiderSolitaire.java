@@ -1,4 +1,7 @@
-import java.util.Scanner;
+import java.util.*;
+import javax.swing.*;
+import java.io.IOException;
+import java.io.*;
 
 public class P2_Khot_Tanvi_SpiderSolitaire
 {
@@ -38,27 +41,53 @@ public class P2_Khot_Tanvi_SpiderSolitaire
             System.out.println("   draw");
             System.out.println("   clear [source_stack]");
             System.out.println("   restart");
+            System.out.println("   save");
+            System.out.println("   load");
             System.out.println("   quit");
             System.out.print(">");
             String command = input.next();
 
-            if (command.equals("move") || command.equals("m")) {
+            if (command.equals("move")) {
                 /* *** TO BE MODIFIED IN ACTIVITY 5 *** */
-                String symbol = input.next();
-                int sourceStack = input.nextInt();
-                int destinationStack = input.nextInt();
-                board.makeMove(symbol, sourceStack - 1, destinationStack - 1);
+                try {
+                    String symbol = input.next();
+                    int sourceStack = input.nextInt();
+                    int destinationStack = input.nextInt();
+                    board.makeMove(symbol, sourceStack - 1, destinationStack - 1);
+                } catch (InputMismatchException e) {
+                    displayMoveUsage();
+                }
             }
-            else if (command.equals("draw") || command.equals("d")) {
+            else if (command.equals("draw")) {
                 board.drawCards();
             }
-            else if (command.equals("clear") || command.equals("c")) {
+            else if (command.equals("clear")) {
                 /* *** TO BE MODIFIED IN ACTIVITY 5 *** */
-                int sourceStack = input.nextInt();
-                board.clear(sourceStack - 1);
+                try {
+                    int sourceStack = input.nextInt();
+                    board.clear(sourceStack - 1);
+                } catch (InputMismatchException e) {
+                    displayClearUsage();
+                }
             }
             else if (command.equals("restart")) {
                 board = new P2_Khot_Tanvi_Board(NUM_STACKS, NUM_DECKS);
+            }
+            else if (command.equals("save")) {
+                JFileChooser fileChooser = new JFileChooser(".");
+                int result = fileChooser.showSaveDialog(null);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        File saveFile = fileChooser.getSelectedFile();
+                        FileWriter out = new FileWriter(saveFile);
+                        out.write(board.toString());
+                        out.close();
+                    } catch (IOException e) {
+                        System.out.println("There was an error writing to the file.");
+                    }
+                }
+            }
+            else if (command.equals("load")) {
             }
             else if (command.equals("quit")) {
                 System.out.println("Goodbye!");
@@ -76,5 +105,15 @@ public class P2_Khot_Tanvi_SpiderSolitaire
             }
         }
         System.out.println("Congratulations!  You win!");
+    }
+
+    private void displayClearUsage() {
+        System.out.println("Error: Please use the correct format for clear command");
+        System.out.println("   clear [source_stack]");
+    }
+
+    private void displayMoveUsage() {
+        System.out.println("Error: Please use the correct format for move command");
+        System.out.println("    move [card] [source_stack] [destination_stack]");
     }
 }
