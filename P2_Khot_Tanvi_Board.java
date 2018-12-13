@@ -56,6 +56,10 @@ public class P2_Khot_Tanvi_Board
         // remaining cards go to the drawPile
         drawPile = deck;
     }
+    
+    public P2_Khot_Tanvi_Board(String saveState) {
+        this.setState(saveState);
+    }
 
     /**
      *  Moves a run of cards from src to dest (if possible) and flips the
@@ -173,5 +177,25 @@ public class P2_Khot_Tanvi_Board
         str += "DrawPile: ";
         str += drawPile.toString();
         return str;
+    }
+    
+    public String getSaveState() {
+        String str = "";
+        for (P2_Khot_Tanvi_Deck deck : stacks) {
+            str += deck.getSaveState();
+            str += "\n";
+        }
+        str += this.drawPile.getSaveState();
+        return str;
+    }
+    
+    public void setState(String saveState) {
+        String[] stateParts = saveState.split("\n");
+        this.stacks = new ArrayList<P2_Khot_Tanvi_Deck>();
+        for (String deckState : stateParts) {
+            P2_Khot_Tanvi_Deck deck = new P2_Khot_Tanvi_Deck(deckState);
+            this.stacks.add(deck);
+        }
+        this.drawPile = this.stacks.remove(this.stacks.size() - 1);
     }
 }

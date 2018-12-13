@@ -16,6 +16,10 @@ public class P2_Khot_Tanvi_Deck {
     public P2_Khot_Tanvi_Deck() {
         this.cards = new ArrayList<P2_Khot_Tanvi_Card>();
     }
+    
+    public P2_Khot_Tanvi_Deck(String saveState) {
+        this.setState(saveState);
+    }
 
     /* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
 
@@ -200,5 +204,25 @@ public class P2_Khot_Tanvi_Deck {
             cards.add(new P2_Khot_Tanvi_Card(symbols[i], values[i]));
         }
         //        }
+    }
+    
+    public String getSaveState() {
+        String str = "";
+        for (P2_Khot_Tanvi_Card card : cards) {
+            if (str.length() > 0) {
+                str += ",";
+            }
+            str += card.getSaveState();
+        }
+        return str;
+    }
+    
+    public void setState(String saveState) {
+        String[] stateParts = saveState.split(",");
+        this.cards = new ArrayList<P2_Khot_Tanvi_Card>();
+        for (String cardState : stateParts) {
+            P2_Khot_Tanvi_Card card = new P2_Khot_Tanvi_Card(cardState);
+            this.cards.add(card);
+        }
     }
 }

@@ -2,6 +2,9 @@ import java.util.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.io.*;
+import java.awt.*;
+import java.util.concurrent.atomic.*;
+import java.lang.reflect.*;
 
 public class P2_Khot_Tanvi_SpiderSolitaire
 {
@@ -74,20 +77,10 @@ public class P2_Khot_Tanvi_SpiderSolitaire
                 board = new P2_Khot_Tanvi_Board(NUM_STACKS, NUM_DECKS);
             }
             else if (command.equals("save")) {
-                JFileChooser fileChooser = new JFileChooser(".");
-                int result = fileChooser.showSaveDialog(null);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        File saveFile = fileChooser.getSelectedFile();
-                        FileWriter out = new FileWriter(saveFile);
-                        out.write(board.toString());
-                        out.close();
-                    } catch (IOException e) {
-                        System.out.println("There was an error writing to the file.");
-                    }
-                }
+                saveState();
             }
             else if (command.equals("load")) {
+                this.loadSavedState();
             }
             else if (command.equals("quit")) {
                 System.out.println("Goodbye!");
@@ -115,5 +108,71 @@ public class P2_Khot_Tanvi_SpiderSolitaire
     private void displayMoveUsage() {
         System.out.println("Error: Please use the correct format for move command");
         System.out.println("    move [card] [source_stack] [destination_stack]");
+    }
+
+    // The JFileChooser was not working on my Mac. I found the following article
+    // on stackoverflow.com : https://stackoverflow.com/questions/33599014/jfilechooser-not-showing
+    // from which I got the code to work successfully
+    private void saveState() {
+        try {
+            JFileChooser fileChooser = new JFileChooser(".");
+            final AtomicReference<Integer> reference = new AtomicReference<>();
+            EventQueue.invokeAndWait(new Runnable() {
+                    @Override
+                    public void run() {
+                        reference.set(fileChooser.showSaveDialog(null));
+                    }
+                });
+            //            int result = fileChooser.showOpenDialog(dialog);
+            if (reference.get() == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File saveFile = fileChooser.getSelectedFile();
+                    FileWriter out = new FileWriter(saveFile);
+                    out.write(board.getSaveState());
+                    out.close();
+                } catch (IOException e) {
+                    System.out.println("There was an error writing to the file.");
+                }
+            }
+        } catch (InterruptedException e) {
+            System.out.println("There was an error reading from the file");
+        } catch (InvocationTargetException e) {
+            System.out.println("There was an error reading from the file");
+        }
+    }
+
+    private void loadSavedState() {
+        try {
+            JFileChooser fileChooser = new JFileChooser(".");
+            final AtomicReference<Integer> reference = new AtomicReference<>();
+            EventQueue.invokeAndWait(new Runnable() {
+                    @Override
+                    public void run() {
+                        reference.set(fileChooser.showOpenDialog(null));
+                    }
+                });
+            //            int result = fileChooser.showOpenDialog(dialog);
+            if (reference.get() == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File openFile = fileChooser.getSelectedFile();
+                    BufferedReader br = new BufferedReader(new FileReader(openFile));
+                    String str = "";
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        str += line;
+                        str += "\n";
+                    }
+                    br.close();
+                    board = new P2_Khot_Tanvi_Board(str);
+                } catch (IOException e) {
+                    System.out.println("There was an error reading from the file.");
+                }
+            }
+        } catch (InterruptedException e) {
+            System.out.println("There was an error reading from the file");
+        } catch (InvocationTargetException e) {
+            System.out.println("There was an error reading from the file");
+        }
     }
 }

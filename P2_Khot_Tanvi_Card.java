@@ -29,6 +29,10 @@ public class P2_Khot_Tanvi_Card implements Comparable<P2_Khot_Tanvi_Card>
         this.isFaceUp = false;
     }
 
+    public P2_Khot_Tanvi_Card(String saveState) {
+        this.setState(saveState);
+    }
+    
     /**
      * Getter method to access this <code>Card</code>'s symbol.
      * 
@@ -84,5 +88,16 @@ public class P2_Khot_Tanvi_Card implements Comparable<P2_Khot_Tanvi_Card>
      */
     public int compareTo(P2_Khot_Tanvi_Card card) {
         return this.value - card.value;
+    }
+    
+    public String getSaveState() {
+        return symbol + "|" + value + "|" + (isFaceUp?"Y":"N");
+    }
+    
+    public void setState(String saveState) {
+        String[] stateParts = saveState.split("\\|");
+        this.symbol = stateParts[0];
+        this.value = Integer.parseInt(stateParts[1]);
+        this.isFaceUp = stateParts[2].equals("Y");
     }
 }
