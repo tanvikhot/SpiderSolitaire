@@ -220,9 +220,11 @@ public class P2_Khot_Tanvi_Deck {
     public void setState(String saveState) {
         String[] stateParts = saveState.split(",");
         this.cards = new ArrayList<P2_Khot_Tanvi_Card>();
+	if (saveState.trim().length() > 0) {
         for (String cardState : stateParts) {
             P2_Khot_Tanvi_Card card = new P2_Khot_Tanvi_Card(cardState);
             this.cards.add(card);
         }
+	}
     }
 }
