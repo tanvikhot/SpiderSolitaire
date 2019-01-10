@@ -18,18 +18,28 @@ public class P2_Khot_Tanvi_DeckTester
         }
 
         System.out.println(deck);
-        System.out.println("Shuffle 1 time");
+        System.out.print("Shuffle 1 time: ");
         deck.shuffle();
         System.out.println(deck);
-        System.out.println("Shuffle 2 times");
+        System.out.print("Shuffle 2 times: ");
         deck.shuffle();
         System.out.println(deck);
-        System.out.println("Shuffle 3 times");
+        System.out.print("Shuffle 3 times: ");
         deck.shuffle();
+        System.out.println(deck);
+        System.out.println();
+        deck.sort();
+        System.out.print("After sorting: ");
         System.out.println(deck);
 
+        System.out.println();
+        deck.shuffle();
+        System.out.print("Shuffled before dealing 10 cards: ");
+        System.out.println(deck);
         List<P2_Khot_Tanvi_Card> dealtCards = deck.deal(10);
+        System.out.print("Dealt cards: ");
         System.out.println(dealtCards);
+        System.out.print("After Dealing 10 cards: ");
         System.out.println(deck);
     }
 }

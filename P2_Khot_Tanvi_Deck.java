@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -32,6 +33,20 @@ public class P2_Khot_Tanvi_Deck {
     }
 
     public void addAll(ArrayList<P2_Khot_Tanvi_Card> cards) { this.cards.addAll(cards); }
+
+    public void sort(){
+        for (int a = 0; a < cards.size() - 1; a++) {
+            int maxIndex = cards.size() - a-1;
+            for (int i = 0; i < cards.size()-a-1; i++) {
+                if (cards.get(i).compareTo(cards.get(maxIndex)) > 0) {
+                    maxIndex = i;
+                }
+            }
+            P2_Khot_Tanvi_Card temp = cards.get(cards.size() - a - 1);
+            cards.set(cards.size() - a - 1, cards.get(maxIndex));
+            cards.set(maxIndex, temp);
+        }
+    }
 
     public void shuffle() {
         Random rand = new Random();

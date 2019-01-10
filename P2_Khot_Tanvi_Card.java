@@ -86,6 +86,7 @@ public class P2_Khot_Tanvi_Card implements Comparable<P2_Khot_Tanvi_Card>
      * Returns 0 if this card's value and suit are the same
      * as the parameter class value and suit. This method returns -1 if the value 
      */
+    @Override
     public int compareTo(P2_Khot_Tanvi_Card card) {
         return this.value - card.value;
     }
